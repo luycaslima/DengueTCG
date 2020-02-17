@@ -15,8 +15,9 @@ MonoBehaviour:
   title: Inseticida
   cost: 1
   artwork: {fileID: 0}
-  description: "Preven\xE7\xE3o contra o mosquito sempre \xE9 o ideal, mas isso tamb\xE9m
-    ajuda."
+  description: "\"Preven\xE7\xE3o contra o mosquito sempre \xE9 o ideal, mas isso
+    tamb\xE9m ajuda.\""
+  flavorText: 
   type: 0
   backgroundEffect: {fileID: 0}
   effect: 5
