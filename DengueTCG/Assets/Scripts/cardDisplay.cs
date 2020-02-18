@@ -18,6 +18,9 @@ public class cardDisplay : MonoBehaviour
     public Image artwork;
     public Image background; //simbolo do efeito da carta
 
+
+    RectTransform sizeCard;
+   
     //Pesquisar como receber os textos do textpro
     // Start is called before the first frame update
 
@@ -60,9 +63,23 @@ public class cardDisplay : MonoBehaviour
         //background.sprite = c.backgroundEffect[0];
     }
 
+
+    public void onHold()
+    {
+       
+        sizeCard.localScale = new Vector3(0.6f, 0.6f, 0.6f); 
+    }
+
+    public void onExit()
+    {
+        
+        sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+
+    }
     //Para Teste
     void Start()
     {
+        sizeCard = GetComponent<RectTransform>();
         LoadCard(card);
     }
 
