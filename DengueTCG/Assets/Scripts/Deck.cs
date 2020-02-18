@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
-
+    Stack<Card> baralhoPilha = new Stack<Card>();
     public List<Card> deck = new List<Card>();
 
     public Card[] baralho;
@@ -29,6 +29,7 @@ public class Deck : MonoBehaviour
     public void PickUpCards(int numberOfCards)
     {
         //Pega um número de cartas e instancia na mão do player
-
+        
     }
+
 }

@@ -19,8 +19,10 @@ public class cardDisplay : MonoBehaviour
     public Image background; //simbolo do efeito da carta
 
 
-    RectTransform sizeCard;
-   
+    public RectTransform sizeCard;
+    private RectTransform originalPos;
+    
+
     //Pesquisar como receber os textos do textpro
     // Start is called before the first frame update
 
@@ -66,20 +68,27 @@ public class cardDisplay : MonoBehaviour
 
     public void onHold()
     {
-       
+        //ocultar a carta atual e desenhar algo na tela?
+        sizeCard.position = new Vector3(0, .5f);
         sizeCard.localScale = new Vector3(0.6f, 0.6f, 0.6f); 
     }
 
     public void onExit()
     {
-        
+        sizeCard.position = originalPos.position;
         sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
 
+    }
+
+    public void OnDrag()
+    {
+        
     }
     //Para Teste
     void Start()
     {
-        sizeCard = GetComponent<RectTransform>();
+        
+        originalPos = GetComponent<RectTransform>();
         LoadCard(card);
     }
 
