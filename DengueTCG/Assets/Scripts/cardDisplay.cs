@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine; 
 using TMPro;
+using DG.Tweening;
 using UnityEngine.UI;
 
 public class cardDisplay : MonoBehaviour
@@ -68,16 +69,18 @@ public class cardDisplay : MonoBehaviour
 
     public void onHold()
     {
-        //ocultar a carta atual e desenhar algo na tela?
         
-        sizeCard.position = new Vector3(0, .6f);
+        //sizeCard.DOAnchorPos(new Vector2(0,350f), .30f);
+        sizeCard.DOMove(new Vector3(0, .6f), .30f);
+        //sizeCard.position = new Vector3(0, .6f);
         sizeCard.localScale = new Vector3(0.6f, 0.6f, 0.6f); 
     }
 
     public void onExit()
     {
-       
-        sizeCard.position = originalPos.position;
+        //sizeCard.DOAnchorPos(originalPos.position, .30f);
+        sizeCard.DOMove(originalPos.position, .30f);
+        //sizeCard.position = originalPos.position;
         sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
 
     }
