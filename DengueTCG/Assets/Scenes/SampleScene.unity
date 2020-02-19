@@ -4235,7 +4235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000030518, y: 71}
+  m_AnchoredPosition: {x: 0.000030518, y: 30}
   m_SizeDelta: {x: 582.1, y: 295.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &697517264
@@ -4259,7 +4259,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 2, y: 0}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
 --- !u!222 &697517265
@@ -8871,7 +8871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1525829704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8888,7 +8888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 285, y: 71}
+  m_AnchoredPosition: {x: 231, y: 212}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1525829705
@@ -9468,7 +9468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deck: []
   baralho: []
-  myHandsGrid: {fileID: 0}
+  myHandsGrid: {fileID: 697517262}
 --- !u!1 &1725772678
 GameObject:
   m_ObjectHideFlags: 0
