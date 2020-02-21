@@ -98,19 +98,21 @@ public class Deck : MonoBehaviour
             {
                 handPosition = player.myHand.nextCard; //pega a próxima posição na mão
                 targetPosition = handPosition;
-
+                
+                //Otimizar essas calls , podem ser custosas no futuro
                 cardInstanciacao.transform.SetParent(myHandsGrid.transform); //Ao terminar a animaçao , seta como parente
+                cardInstanciacao.GetComponent<cardDisplay>().parent = myHandsGrid.transform;
                 cardInstanciacao.GetComponent<cardDisplay>().positionToGoBack = handPosition; //Da a posição atual pra carta ficar
             }
 
             //cardInstanciacao.transform.position = Vector3.Lerp(cardInstanciacao.transform.position, targetPosition, 10 * Time.deltaTime);
             
 
-            if (targetPosition == showCardPos.position)
+            if (targetPosition == showCardPos.position )
             {
                    cardInstanciacao.transform.position = Vector3.Lerp(cardInstanciacao.transform.position, targetPosition, 10 * Time.deltaTime);
 
-            }else if (targetPosition == handPosition)
+            }else if (targetPosition == handPosition )
             {
                 if(Vector3.Distance(cardInstanciacao.transform.position, targetPosition) > 0.1 && !chegou)
                 {
@@ -118,6 +120,7 @@ public class Deck : MonoBehaviour
                 }
                 else{
                     chegou = true;
+                    
                 }
 
             }

@@ -50,6 +50,7 @@ public class PlayerHandController : MonoBehaviour
 
     }
 
+    //calcula a distancia que a carta vai fica agora
     private Vector3 CalculateDistanceHandPosition(int indice, int limit)
     {
        

@@ -1021,7 +1021,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 793404309}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2734,12 +2734,12 @@ RectTransform:
   - {fileID: 1737120202}
   - {fileID: 1725772679}
   m_Father: {fileID: 793404309}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -136.9, y: 146}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 500, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &553588386
 MonoBehaviour:
@@ -3636,7 +3636,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 793404309}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3665,7 +3665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionToShowCard: {fileID: 2105044991}
   maxCardOnHand: 7
-  rangedCardPosition: {x: 3, y: 0, z: 0}
+  rangedCardPosition: {x: 4, y: 0, z: 0}
   cards: []
 --- !u!1 &723206283
 GameObject:
@@ -4043,11 +4043,11 @@ RectTransform:
   m_Children:
   - {fileID: 869281431}
   - {fileID: 1675812469}
+  - {fileID: 553588385}
   - {fileID: 874901224}
   - {fileID: 2094092263}
   - {fileID: 271389324}
   - {fileID: 697517263}
-  - {fileID: 553588385}
   - {fileID: 7782306692302643363}
   - {fileID: 2105044991}
   m_Father: {fileID: 0}
@@ -4592,7 +4592,7 @@ RectTransform:
   - {fileID: 1882331015}
   - {fileID: 1759146091}
   m_Father: {fileID: 793404309}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9673,7 +9673,7 @@ RectTransform:
   - {fileID: 154288716}
   - {fileID: 1441988292}
   m_Father: {fileID: 793404309}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}

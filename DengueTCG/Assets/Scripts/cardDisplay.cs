@@ -33,13 +33,16 @@ public class cardDisplay : MonoBehaviour
     public bool showCard;
 
     private RectTransform enemyTarget; //Recebe a posição da imagem do inimigo
+    private GameObject discardPile;
+    private RectTransform discardPilePos;
 
     [System.NonSerialized]
     public Vector3 positionToGoBack;
     private bool voltarAoLugar;
 
-
-    private Transform parent;
+    [System.NonSerialized]
+    public Transform parent;
+    private int position = 0; //Posição que fica na fila objetos filhos
 
     //Pesquisar como receber os textos do textpro
     // Start is called before the first frame update
@@ -89,6 +92,7 @@ public class cardDisplay : MonoBehaviour
     {
        if (showCard)
         {
+            transform.SetAsLastSibling(); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
             sizeCard.DOMove(new Vector3(0, .6f), .30f);
             //sizeCard.position = new Vector3(0, .6f);
             sizeCard.localScale = new Vector3(0.6f, 0.6f, 0.6f);
@@ -99,6 +103,9 @@ public class cardDisplay : MonoBehaviour
     {
         if (showCard)
         {
+            transform.SetSiblingIndex(position); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
+
+            
             sizeCard.DOMove(originalPos.position, .30f);
             //sizeCard.position = originalPos.position;
             sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
@@ -108,36 +115,53 @@ public class cardDisplay : MonoBehaviour
     
     public void OnDrag()
     {
+        transform.SetAsLastSibling(); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
+
         showCard = false;
         
         Vector3 screenPoint = Input.mousePosition;
         screenPoint.z = 10.0f; //distance of the plane from the camera
         transform.position = Camera.main.ScreenToWorldPoint(screenPoint);
         sizeCard.position = transform.position;
-
-
+        
         sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
       
     }
+
+    //se n tiver encostando no inimigo voltar para posiçao original, se encostar ,da dano e deletar o display e adicionar a carta na pilha de descarte
     public void OnEndDrag()
     {
+        if(position == transform.childCount)
+        {
+            transform.SetAsLastSibling();
+        }
+
+        //Cálculo para pegar o ponto do mouse na tela e adaptar ao espaço na camera
         Vector3 screenPoint = Input.mousePosition;
         screenPoint.z = 10.0f; //distance of the plane from the camera
         Vector3 aux =  Camera.main.ScreenToWorldPoint(screenPoint);
 
+        //Checa se a carta não está emcima do inimigo
         if (!RectTransformUtility.RectangleContainsScreenPoint(enemyTarget, aux))
         {
-            showCard = true;
-            transform.position = positionToGoBack;
+            //Se tiver emcima da pilha de descarte
+            if (RectTransformUtility.RectangleContainsScreenPoint(discardPilePos, aux))
+            {
+
+            }
+            else//Senao volta ao lugar original
+            {
+                showCard = true;
+                transform.position = positionToGoBack;
+            }
         }
         else
         {
-           //Destroir a carta aqui e executar a ação 
+           
+           //"Destruir" a carta aqui e executar a ação 
            //Buga no parent do Deck 
         }
         
-       
-        //se n tiver encostando no inimigo voltar para posiçao original, se encostar ,da dano e deletar o display e adicionar a carta na pilha de descarte
     }
 
     //Para Teste
@@ -145,6 +169,9 @@ public class cardDisplay : MonoBehaviour
     {
         var enemy = GameObject.Find("Enemy Image");
         enemyTarget = enemy.GetComponent<RectTransform>();
+
+        discardPile = GameObject.Find("Discard Pile");
+        discardPilePos = discardPile.GetComponent<RectTransform>();
 
         originalPos = GetComponent<RectTransform>(); //Recebe a posição e tamanho inicial da carta
         LoadCard(card);
@@ -156,9 +183,10 @@ public class cardDisplay : MonoBehaviour
         if (!showCard)
         {
             
-            if(transform.parent.name.Equals("Player Hand"))
+            if(transform.parent.name.Equals("Player Hand") && Vector3.Distance(transform.position, positionToGoBack) < 0.1f)
             {
-                parent = transform.parent;
+                //parent = transform.parent; //setando isso no DECK
+                position = transform.GetSiblingIndex();
                 showCard = true;
             }
         }
