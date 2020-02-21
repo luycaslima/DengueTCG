@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     [Header("Referencia dos Textos")]
     public Text nameText;
     public Text hpText;
-    public Text numberOfCards;
     public Text actualCostText;
     public Text totalCostText;
 

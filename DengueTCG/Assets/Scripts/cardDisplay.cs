@@ -41,10 +41,10 @@ public class cardDisplay : MonoBehaviour
 
     [System.NonSerialized]
     public Vector3 positionToGoBack;
-    private bool voltarAoLugar;
+
 
     [System.NonSerialized]
-    public Transform parent;
+    public GameObject parent;
     private int position = 0; //Posição que fica na fila objetos filhos
 
     public void LoadCard(Card c)
@@ -87,14 +87,26 @@ public class cardDisplay : MonoBehaviour
         //background.sprite = c.backgroundEffect[0];
     }
 
-
+    public void CheckChild()
+    {
+        if (position + 1 == parent.transform.childCount)
+        {
+            transform.SetAsLastSibling();
+        }
+        else
+        {
+            transform.SetSiblingIndex(position);
+        }
+    }
     //utilizava on pointer enter  e exit para aumentar e diminuir a carta(faz mais sentido no mouse)
     public void onHold()
     {
        if (showCard)
         {
             transform.SetAsLastSibling(); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
+            
             sizeCard.DOMove(new Vector3(0, .6f), .30f);
+
             //sizeCard.position = new Vector3(0, .6f);
             sizeCard.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         }
@@ -104,9 +116,9 @@ public class cardDisplay : MonoBehaviour
     {
         if (showCard)
         {
-            transform.SetSiblingIndex(position); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
+            CheckChild();
+           // transform.SetSiblingIndex(position); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
 
-            
             sizeCard.DOMove(originalPos.position, .30f);
             //sizeCard.position = originalPos.position;
             sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
@@ -118,6 +130,7 @@ public class cardDisplay : MonoBehaviour
     {
         transform.SetAsLastSibling(); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
 
+        sizeCard.DOKill();
         showCard = false;
         
         Vector3 screenPoint = Input.mousePosition;
@@ -132,15 +145,7 @@ public class cardDisplay : MonoBehaviour
     //se n tiver encostando no inimigo voltar para posiçao original, se encostar ,da dano e deletar o display e adicionar a carta na pilha de descarte
     public void OnEndDrag()
     {
-        if(position == transform.childCount)
-        {
-            transform.SetAsLastSibling();
-        }
-        else
-        {
-            transform.SetSiblingIndex(position);
-        }
-
+        CheckChild();
         //Cálculo para pegar o ponto do mouse na tela e adaptar ao espaço na camera
         Vector3 screenPoint = Input.mousePosition;
         screenPoint.z = 10.0f; //distance of the plane from the camera
@@ -172,6 +177,7 @@ public class cardDisplay : MonoBehaviour
     //Para Teste
     void Start()
     {
+        
         var enemy = GameObject.Find("Enemy Image");
         enemyTarget = enemy.GetComponent<RectTransform>();
 
@@ -190,6 +196,7 @@ public class cardDisplay : MonoBehaviour
             
             if(transform.parent.name.Equals("Player Hand") && Vector3.Distance(transform.position, positionToGoBack) < 0.1f)
             {
+                
                 //parent = transform.parent; //setando isso no DECK
                 position = transform.GetSiblingIndex();
                 showCard = true;

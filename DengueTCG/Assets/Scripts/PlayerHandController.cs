@@ -14,10 +14,8 @@ public class PlayerHandController : MonoBehaviour
     public Vector3 nextCard;
 
     private PlayerController player;
-    private  Vector3 minPosition;
+    private Vector3 minPosition;
     private Vector3 maxPosition;
-
-    
 
     public List<GameObject> cards = new List<GameObject>();
     // Start is called before the first frame update

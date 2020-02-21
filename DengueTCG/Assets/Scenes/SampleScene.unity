@@ -4688,7 +4688,6 @@ MonoBehaviour:
   myDiscard: {fileID: 553588386}
   nameText: {fileID: 1759146092}
   hpText: {fileID: 1882331016}
-  numberOfCards: {fileID: 858069554}
   actualCostText: {fileID: 457551132}
   totalCostText: {fileID: 723206285}
   max_HP: 15
@@ -8201,6 +8200,7 @@ MonoBehaviour:
   myHandsGrid: {fileID: 697517262}
   initialDeckPos: {fileID: 7782306692302643363}
   showCardPos: {fileID: 2105044991}
+  numberOfCardsText: {fileID: 858069554}
   deck:
   - {fileID: 11400000, guid: ab0e687e13efe7f4c8161263d32aacd3, type: 2}
   - {fileID: 11400000, guid: 2a11d0e0ee6d0314bbd8eb94ea9d3018, type: 2}

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Deck : MonoBehaviour
@@ -12,13 +13,17 @@ public class Deck : MonoBehaviour
     bool moveToHand;
     bool chegou;
 
-    [Tooltip("Prefab da carta utilizado")]
+    [Tooltip("Base da Carta")]
     public GameObject cardPrefab;   //Prefab da carta utilizado
-    public GameObject myHandsGrid;  //onde as Cartas ficam
     
-
+    [Header("Posições da Carta")]
+    public GameObject myHandsGrid;  //onde as Cartas ficam
     public RectTransform initialDeckPos; //Posição inicial onde a carta surge
     public RectTransform showCardPos; //Posição que a carta mostra pro usuário
+
+    [Header("Texto número de cartas")]
+    public Text numberOfCardsText;
+    private int numberOfCards = 0;
 
     public List<Card> deck = new List<Card>();
 
@@ -33,20 +38,22 @@ public class Deck : MonoBehaviour
     
     //Criar classe altera o tamanho das cartas da ui e deixa eu clicar em cada uma delas e executa a ação dela
     //Essa mesma classe recebe o texto mostrando quanto de custo ainda possuo para usar as cartas e atualiza na tela
-    public void PickUpCards(int numberOfCards)
+    public void PickUpCards(int pickedCards)
     {
         //Checa se o deck possui cards ainda
         if (deck.Any()) {
 
+            
             chegou = false;
             //Se a ultima carta n foi chamada como parente ainda , é chamada aqui
             if (cardInstanciacao != null)
             {
+                cardInstanciacao.GetComponent<cardDisplay>().parent = myHandsGrid;
                 cardInstanciacao.transform.SetParent(myHandsGrid.transform);
             }
             
             //Pega uma carta
-            for (int i = 0; i < numberOfCards; i++)
+            for (int i = 0; i < pickedCards; i++)
             {
 
                 int rndCardIndex = Random.Range(0, deck.Count);
@@ -72,8 +79,13 @@ public class Deck : MonoBehaviour
                 currentTimeShow = 0;
 
                 player.myHand.AddCard(cardInstanciacao);
+
+                
             }
-            
+            numberOfCards = numberOfCards - pickedCards;
+            numberOfCardsText.text = numberOfCards.ToString();
+
+
         }
         
         
@@ -86,12 +98,14 @@ public class Deck : MonoBehaviour
     } 
     private void Start()
     {
-        
+        numberOfCards = deck.Count;
+        numberOfCardsText.text = numberOfCards.ToString();
     }
 
     private void Update()
     {
         
+
         if (moveToHand && cardInstanciacao != null)
         {
             currentTimeShow += Time.deltaTime;
@@ -102,7 +116,7 @@ public class Deck : MonoBehaviour
                 
                 //Otimizar essas calls , podem ser custosas no futuro
                 cardInstanciacao.transform.SetParent(myHandsGrid.transform); //Ao terminar a animaçao , seta como parente
-                cardInstanciacao.GetComponent<cardDisplay>().parent = myHandsGrid.transform;
+                cardInstanciacao.GetComponent<cardDisplay>().parent = myHandsGrid;
                 cardInstanciacao.GetComponent<cardDisplay>().positionToGoBack = handPosition; //Da a posição atual pra carta ficar
             }
 
@@ -113,15 +127,16 @@ public class Deck : MonoBehaviour
             {
                    cardInstanciacao.transform.position = Vector3.Lerp(cardInstanciacao.transform.position, targetPosition, 10 * Time.deltaTime);
 
-            }else if (targetPosition == handPosition )
+            }
+            else if (targetPosition == handPosition )
             {
                 if(Vector3.Distance(cardInstanciacao.transform.position, targetPosition) > 0.1 && !chegou)
                 {
                     cardInstanciacao.transform.position = Vector3.Lerp(cardInstanciacao.transform.position, targetPosition, 10 * Time.deltaTime);
                 }
-                else{
+                else
+                {
                     chegou = true;
-                    
                 }
 
             }
@@ -129,10 +144,8 @@ public class Deck : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            PickUpCards(1);
-        }
+
+
     }
 
 }

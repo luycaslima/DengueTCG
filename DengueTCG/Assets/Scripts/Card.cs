@@ -7,7 +7,7 @@ using UnityEngine;
 public class Card : ScriptableObject {
     
     //Cria um objeto que armazena os dados da carta
-    public new string title;
+    public string title;
     public int cost;
     public Sprite artwork;
     [TextArea]
