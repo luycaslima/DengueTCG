@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class cardDisplay : MonoBehaviour
 {
+    //O que é um modelo anemico e rico ? 
+
+    [Header("Referencia do Texto e Arte:")]
     //Mostra os dados da carta na UI
     public Card card;
 
@@ -43,9 +46,6 @@ public class cardDisplay : MonoBehaviour
     [System.NonSerialized]
     public Transform parent;
     private int position = 0; //Posição que fica na fila objetos filhos
-
-    //Pesquisar como receber os textos do textpro
-    // Start is called before the first frame update
 
     public void LoadCard(Card c)
     {
@@ -88,6 +88,7 @@ public class cardDisplay : MonoBehaviour
     }
 
 
+    //utilizava on pointer enter  e exit para aumentar e diminuir a carta(faz mais sentido no mouse)
     public void onHold()
     {
        if (showCard)
@@ -135,6 +136,10 @@ public class cardDisplay : MonoBehaviour
         {
             transform.SetAsLastSibling();
         }
+        else
+        {
+            transform.SetSiblingIndex(position);
+        }
 
         //Cálculo para pegar o ponto do mouse na tela e adaptar ao espaço na camera
         Vector3 screenPoint = Input.mousePosition;
@@ -158,7 +163,7 @@ public class cardDisplay : MonoBehaviour
         else
         {
            
-           //"Destruir" a carta aqui e executar a ação 
+           //"Destruir o display" e  armazenar a carta na pilha aqui e executar a ação 
            //Buga no parent do Deck 
         }
         

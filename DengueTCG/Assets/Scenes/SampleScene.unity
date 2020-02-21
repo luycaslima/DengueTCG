@@ -2750,15 +2750,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 553588384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a212552c42122e94394ebcfab467faae, type: 3}
+  m_Script: {fileID: 11500000, guid: 64d6c2daeb3807c4b82d97e5d5cab4d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeShowPlayer: 0
-  cardPrefab: {fileID: 0}
-  myHandsGrid: {fileID: 0}
-  initialDeckPos: {fileID: 0}
-  showCardPos: {fileID: 0}
-  deck: []
 --- !u!222 &553588387
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4521,6 +4515,83 @@ MonoBehaviour:
   background: {fileID: 774551726}
   sizeCard: {fileID: 0}
   showCard: 0
+--- !u!1 &858069552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858069553}
+  - component: {fileID: 858069555}
+  - component: {fileID: 858069554}
+  m_Layer: 5
+  m_Name: Numero de Cartas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &858069553
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858069552}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 874901224}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 60}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &858069554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858069552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
+    m_FontSize: 36
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &858069555
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858069552}
+  m_CullTransparentMesh: 0
 --- !u!1 &869281430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4591,6 +4662,7 @@ RectTransform:
   - {fileID: 1525829704}
   - {fileID: 1882331015}
   - {fileID: 1759146091}
+  - {fileID: 858069553}
   m_Father: {fileID: 793404309}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4613,9 +4685,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDeck: {fileID: 1675812471}
   myHand: {fileID: 697517266}
+  myDiscard: {fileID: 553588386}
   nameText: {fileID: 1759146092}
   hpText: {fileID: 1882331016}
-  numberOfCards: {fileID: 0}
+  numberOfCards: {fileID: 858069554}
   actualCostText: {fileID: 457551132}
   totalCostText: {fileID: 723206285}
   max_HP: 15
@@ -6647,6 +6720,7 @@ GameObject:
   - component: {fileID: 1314458086}
   - component: {fileID: 1314458085}
   - component: {fileID: 1314458084}
+  - component: {fileID: 1314458087}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -6702,6 +6776,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1314458087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314458083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9672f1d6191b7e43a3d916fb7b85199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1315230965
 GameObject:
   m_ObjectHideFlags: 0

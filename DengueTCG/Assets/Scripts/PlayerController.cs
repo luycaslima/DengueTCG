@@ -6,16 +6,20 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Partes do Player")]
     public Deck playerDeck;
     public PlayerHandController myHand;
- 
+    public DiscardPile myDiscard;
 
+    [Header("Referencia dos Textos")]
     public Text nameText;
     public Text hpText;
     public Text numberOfCards;
     public Text actualCostText;
     public Text totalCostText;
 
+    [Header("Status do Player")]
+    [Tooltip("Hp máximo do player")]
     public int max_HP = 15;
     private int hp;
     public int shield = 0;
@@ -25,10 +29,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         max_HP = hp;
+        
+        myDiscard.DiscardSetup(this);
         playerDeck.DeckSetup(this);//setando que este baralho é meu   
         myHand.setPlayer(this);
     }
 
+    //Ser comandos override da interfae Entidade
     
     public void Damage(int damage)
     {

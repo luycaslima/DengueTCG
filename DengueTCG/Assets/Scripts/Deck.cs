@@ -12,21 +12,22 @@ public class Deck : MonoBehaviour
     bool moveToHand;
     bool chegou;
 
+    [Tooltip("Prefab da carta utilizado")]
+    public GameObject cardPrefab;   //Prefab da carta utilizado
+    public GameObject myHandsGrid;  //onde as Cartas ficam
+    
 
-    public GameObject cardPrefab;
-    public GameObject myHandsGrid; //onde as Cartas ficam
-
-    public RectTransform initialDeckPos;
-    public RectTransform showCardPos;
+    public RectTransform initialDeckPos; //Posição inicial onde a carta surge
+    public RectTransform showCardPos; //Posição que a carta mostra pro usuário
 
     public List<Card> deck = new List<Card>();
 
     private PlayerController player;
 
-    private Vector3 targetPosition;
-    private Vector3 handPosition;
+    private Vector3 targetPosition; //Armazena a posição que a carta vai no momento
+    private Vector3 handPosition;   //Posição que recebe a posição da mão que a carta vai fica
 
-    private GameObject cardInstanciacao;
+    private GameObject cardInstanciacao; //Instancia da carta criada
 
    
     
@@ -38,13 +39,13 @@ public class Deck : MonoBehaviour
         if (deck.Any()) {
 
             chegou = false;
-            //Se a ultima carta n foi chamada como parente , é chamad aqui
+            //Se a ultima carta n foi chamada como parente ainda , é chamada aqui
             if (cardInstanciacao != null)
             {
-                
                 cardInstanciacao.transform.SetParent(myHandsGrid.transform);
             }
             
+            //Pega uma carta
             for (int i = 0; i < numberOfCards; i++)
             {
 
@@ -125,14 +126,12 @@ public class Deck : MonoBehaviour
 
             }
 
-
         }
 
 
         if (Input.GetButtonDown("Jump"))
         {
             PickUpCards(1);
-
         }
     }
 

@@ -3,6 +3,8 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - Card
     - Deck
+    - DiscardPile
+    - DragTreshold
     - PlayerController
     - PlayerHandController
     - cardDisplay
@@ -10,6 +12,8 @@ ScriptsOnlyBuild:
     - DG.Tweening.Core.DOTweenSettings
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.Rider.Editor.dll:
@@ -94,11 +98,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12956}
     - Class: 114
-      Script: {instanceID: 13136}
+      Script: {instanceID: 13064}
     - Class: 114
-      Script: {instanceID: 13328}
+      Script: {instanceID: 13138}
     - Class: 114
-      Script: {instanceID: 13370}
+      Script: {instanceID: 13330}
+    - Class: 114
+      Script: {instanceID: 13372}
+    - Class: 114
+      Script: {instanceID: 20328}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -174,7 +182,7 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
-      Hash: 8f49724fcf6011b0c04a794d02930492
+      Hash: f2ee14795f3dd47c51b9be3e415fff83
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -558,6 +566,12 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DragTreshold
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -688,6 +702,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DiscardPile
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
