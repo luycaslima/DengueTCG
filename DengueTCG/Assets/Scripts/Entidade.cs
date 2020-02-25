@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entidade : MonoBehaviour
+[System.Serializable]
+public class Entidade
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Tooltip("Hp máximo da entidade")]
+    public int max_HP;
+    [Tooltip("Escudo máximo da entidade ")]
+    public int max_Shield;
+    [Tooltip("Energias para cartas máximo")]
+    public int max_cost;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -14,12 +14,12 @@ public class Deck : MonoBehaviour
     bool chegou;
 
     [Tooltip("Base da Carta")]
-    public GameObject cardPrefab;   //Prefab da carta utilizado
+    public GameObject cardPrefab;   //Prefab do display da carta
     
     [Header("Posições da Carta")]
-    public GameObject myHandsGrid;  //onde as Cartas ficam
+    public GameObject myHandsGrid;       //Posição da mão onde as Cartas ficam
     public RectTransform initialDeckPos; //Posição inicial onde a carta surge
-    public RectTransform showCardPos; //Posição que a carta mostra pro usuário
+    public RectTransform showCardPos;    //Posição que a carta mostra pro usuário
 
     [Header("Texto número de cartas")]
     public Text numberOfCardsText;
@@ -32,6 +32,7 @@ public class Deck : MonoBehaviour
     private Vector3 targetPosition; //Armazena a posição que a carta vai no momento
     private Vector3 handPosition;   //Posição que recebe a posição da mão que a carta vai fica
 
+    [SerializeField]
     private GameObject cardInstanciacao; //Instancia da carta criada
 
    
@@ -74,7 +75,6 @@ public class Deck : MonoBehaviour
 
                 moveToHand = true;
                 
-
                 targetPosition = showCardPos.transform.position; //vai pra posição de show
                 currentTimeShow = 0;
 
@@ -96,6 +96,9 @@ public class Deck : MonoBehaviour
     {
         player = playerToSet;
     } 
+
+
+    
     private void Start()
     {
         numberOfCards = deck.Count;
@@ -120,8 +123,6 @@ public class Deck : MonoBehaviour
                 cardInstanciacao.GetComponent<cardDisplay>().positionToGoBack = handPosition; //Da a posição atual pra carta ficar
             }
 
-            //cardInstanciacao.transform.position = Vector3.Lerp(cardInstanciacao.transform.position, targetPosition, 10 * Time.deltaTime);
-            
 
             if (targetPosition == showCardPos.position )
             {
@@ -136,6 +137,7 @@ public class Deck : MonoBehaviour
                 }
                 else
                 {
+                    cardInstanciacao = null;
                     chegou = true;
                 }
 

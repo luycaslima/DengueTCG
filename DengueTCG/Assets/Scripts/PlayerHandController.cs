@@ -8,21 +8,27 @@ public class PlayerHandController : MonoBehaviour
     public Transform positionToShowCard;
     public int maxCardOnHand = 7;
 
+    public int discardLimit = 1;
+    private int actualDiscard = 0;
+    private bool podeDescartar;
 
-    public Vector3 rangedCardPosition;
+    public Vector3 rangedCardPosition; // Distancia entre as cartas
     [System.NonSerialized]
     public Vector3 nextCard;
 
     private PlayerController player;
-    private Vector3 minPosition;
-    private Vector3 maxPosition;
+    private Vector3 minPosition; //ponto mais a esquerda limite
+    private Vector3 maxPosition; //ponto mais a direita limite
 
+    //Cartas na mão
     public List<GameObject> cards = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
         minPosition = transform.position - rangedCardPosition;
         maxPosition = transform.position + rangedCardPosition;
+        actualDiscard = 0;
+        podeDescartar = false;
     }
     //Ligando essa mão ao player
     public void setPlayer(PlayerController playerToSet)
@@ -48,10 +54,60 @@ public class PlayerHandController : MonoBehaviour
 
     }
 
+
+    //Recalcular as posições das cartas de acordo com as que sobraram
+    public void ChoosedCard(GameObject choosedCard)
+    {
+        Card cardData = choosedCard.GetComponent<cardDisplay>().card;
+        //Ve se pode usar senao volta pro lugar
+        if(player.currentCost - cardData.cost >= 0)
+        {
+            cards.Remove(choosedCard);
+            player.discardPile.Add(cardData);
+            player.useCost(cardData.cost);
+            Destroy(choosedCard);
+        }
+        else
+        {
+            choosedCard.transform.position = choosedCard.GetComponent<cardDisplay>().positionToGoBack;
+        }
+    }
+
+    public void DiscardCard(GameObject choosedCard)
+    {
+        Card cardData = choosedCard.GetComponent<cardDisplay>().card;
+        if(actualDiscard < discardLimit)
+        {
+            cards.Remove(choosedCard);
+            player.discardPile.Add(cardData);
+
+            //Reiniciar esses valores ao fim da rodada
+            player.status.max_cost = player.status.max_cost + cardData.cost;
+            player.currentCost = player.currentCost + cardData.cost;
+
+            //ATUALIZA O TEXTO
+            player.totalCostText.text = player.status.max_cost.ToString();
+            player.actualCostText.text = player.currentCost.ToString();
+
+
+            actualDiscard = actualDiscard + 1;
+            podeDescartar = true;
+
+            Destroy(choosedCard);
+            //Fazer uma checagem se o valor limite foi atingindo para mudar a cor da pilha de descarte
+        }
+        else
+        {
+            choosedCard.transform.position = choosedCard.GetComponent<cardDisplay>().positionToGoBack;
+        }
+       
+ 
+    }
+
     //calcula a distancia que a carta vai fica agora
     private Vector3 CalculateDistanceHandPosition(int indice, int limit)
     {
-       
+        
         float distance = indice /(float)(limit);
 
         return Vector3.Lerp(minPosition, maxPosition, distance);
@@ -72,6 +128,15 @@ public class PlayerHandController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (podeDescartar)
+        {
+            if(actualDiscard == discardLimit)
+            {
+
+                //ESCURECER A PILHA DE DESCARTE AQUI
+                podeDescartar = false;
+            }
+        }
         
     }
 }

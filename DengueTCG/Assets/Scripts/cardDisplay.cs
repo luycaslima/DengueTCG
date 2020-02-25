@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine; 
-using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 
@@ -20,12 +19,6 @@ public class cardDisplay : MonoBehaviour
     public Text flavorText;
     public Text effects;
 
-    /*Bom mas causa queda de perfomance
-    public TextMeshProUGUI title;
-    public TextMeshProUGUI cost;
-    public TextMeshProUGUI description;
-    public TextMeshProUGUI flavorText;
-    public TextMeshProUGUI effects;*/
 
     public Image artwork;
     public Image background; //simbolo do efeito da carta
@@ -44,7 +37,8 @@ public class cardDisplay : MonoBehaviour
 
 
     [System.NonSerialized]
-    public GameObject parent;
+    public GameObject parent; //Referencia ao parente
+    private PlayerHandController hand; //Referencia ao codigo da mão
     private int position = 0; //Posição que fica na fila objetos filhos
 
     public void LoadCard(Card c)
@@ -98,6 +92,7 @@ public class cardDisplay : MonoBehaviour
             transform.SetSiblingIndex(position);
         }
     }
+
     //utilizava on pointer enter  e exit para aumentar e diminuir a carta(faz mais sentido no mouse)
     public void onHold()
     {
@@ -106,8 +101,6 @@ public class cardDisplay : MonoBehaviour
             transform.SetAsLastSibling(); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
             
             sizeCard.DOMove(new Vector3(0, .6f), .30f);
-
-            //sizeCard.position = new Vector3(0, .6f);
             sizeCard.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         }
     }
@@ -117,10 +110,8 @@ public class cardDisplay : MonoBehaviour
         if (showCard)
         {
             CheckChild();
-           // transform.SetSiblingIndex(position); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
 
             sizeCard.DOMove(originalPos.position, .30f);
-            //sizeCard.position = originalPos.position;
             sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         }
     }
@@ -128,9 +119,10 @@ public class cardDisplay : MonoBehaviour
     
     public void OnDrag()
     {
+        //Checar se pode pegar a carta
         transform.SetAsLastSibling(); //Posiciona como ultimo filho da lista de cartas para renderizar por cima
 
-        sizeCard.DOKill();
+        sizeCard.DOKill(); //Mata a animação da carta ir para o centro
         showCard = false;
         
         Vector3 screenPoint = Input.mousePosition;
@@ -142,11 +134,11 @@ public class cardDisplay : MonoBehaviour
       
     }
 
-    //se n tiver encostando no inimigo voltar para posiçao original, se encostar ,da dano e deletar o display e adicionar a carta na pilha de descarte
+ 
     public void OnEndDrag()
     {
         CheckChild();
-        //Cálculo para pegar o ponto do mouse na tela e adaptar ao espaço na camera
+  
         Vector3 screenPoint = Input.mousePosition;
         screenPoint.z = 10.0f; //distance of the plane from the camera
         Vector3 aux =  Camera.main.ScreenToWorldPoint(screenPoint);
@@ -157,7 +149,8 @@ public class cardDisplay : MonoBehaviour
             //Se tiver emcima da pilha de descarte
             if (RectTransformUtility.RectangleContainsScreenPoint(discardPilePos, aux))
             {
-
+                //Checar aqui se pode  descartar mais uma carta senão voltar ao lugar
+                hand.DiscardCard(this.gameObject);
             }
             else//Senao volta ao lugar original
             {
@@ -167,22 +160,24 @@ public class cardDisplay : MonoBehaviour
         }
         else
         {
-           
-           //"Destruir o display" e  armazenar a carta na pilha aqui e executar a ação 
-           //Buga no parent do Deck 
+            //Checar se o custo permite
+            hand.ChoosedCard(this.gameObject);
+
         }
         
     }
-
-    //Para Teste
+ 
+   
     void Start()
     {
         
         var enemy = GameObject.Find("Enemy Image");
         enemyTarget = enemy.GetComponent<RectTransform>();
 
+        //Inutilizado
         discardPile = GameObject.Find("Discard Pile");
         discardPilePos = discardPile.GetComponent<RectTransform>();
+        //
 
         originalPos = GetComponent<RectTransform>(); //Recebe a posição e tamanho inicial da carta
         LoadCard(card);
@@ -193,11 +188,9 @@ public class cardDisplay : MonoBehaviour
         //Checa se recebeu o valor final da carta na mao para permitir aumentar a carta
         if (!showCard)
         {
-            
             if(transform.parent.name.Equals("Player Hand") && Vector3.Distance(transform.position, positionToGoBack) < 0.1f)
             {
-                
-                //parent = transform.parent; //setando isso no DECK
+                hand = transform.GetComponentInParent<PlayerHandController>();
                 position = transform.GetSiblingIndex();
                 showCard = true;
             }
