@@ -11292,6 +11292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2094092263}
+  - component: {fileID: 2094092264}
   m_Layer: 5
   m_Name: Enemy Stats
   m_TagString: Untagged
@@ -11321,6 +11322,23 @@ RectTransform:
   m_AnchoredPosition: {x: -100.06366, y: -49.964264}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2094092264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094092262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104e1ef4ac11c5b4d98b37d865afe0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  currentHp: 0
+  currentShield: 0
+  nameText: {fileID: 1441988293}
+  hpText: {fileID: 154288717}
 --- !u!1 &2097478443
 GameObject:
   m_ObjectHideFlags: 0
