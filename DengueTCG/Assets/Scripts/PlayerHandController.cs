@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Classe que administra a "mão" do player, se conecta a classe PlayerController 
+/// Aqui é regorganizado as cartas na mão, chamada a função que escolhe a carta, descarta a carta e puxa uma carta
+/// 
+/// Autor: Lucas Lima da Silva Santos
+/// Data de criação: 25/02/2020
+/// </summary>
+
 public class PlayerHandController : MonoBehaviour
 {
     
@@ -30,12 +39,15 @@ public class PlayerHandController : MonoBehaviour
         actualDiscard = 0;
         podeDescartar = false;
     }
+
     //Ligando essa mão ao player
     public void setPlayer(PlayerController playerToSet)
     {
         player = playerToSet;
     }
 
+
+    //Organiza as cartas na mão toda vez que puxa uma carta
     public void ReOrganizeCards()
     {
         Vector3 handPosition = transform.position;
@@ -81,14 +93,9 @@ public class PlayerHandController : MonoBehaviour
             cards.Remove(choosedCard);
             player.discardPile.Add(cardData);
 
-            //Reiniciar esses valores ao fim da rodada
-            player.status.max_cost = player.status.max_cost + cardData.cost;
-            player.currentCost = player.currentCost + cardData.cost;
 
-            //ATUALIZA O TEXTO
-            player.totalCostText.text = player.status.max_cost.ToString();
-            player.actualCostText.text = player.currentCost.ToString();
-
+            player.GrowCost(cardData.cost);
+    
 
             actualDiscard = actualDiscard + 1;
             podeDescartar = true;
@@ -100,11 +107,23 @@ public class PlayerHandController : MonoBehaviour
         {
             choosedCard.transform.position = choosedCard.GetComponent<cardDisplay>().positionToGoBack;
         }
-       
- 
     }
 
-    //calcula a distancia que a carta vai fica agora
+    public void DiscardHand()
+    {
+        Card cardData;
+        int i = 0;
+        while (i < cards.Count)
+        {
+            cardData = cards[i].GetComponent<cardDisplay>().card;
+            player.discardPile.Add(cardData);
+            Destroy(cards[i]);
+            i++;
+        }
+        cards.Clear();
+    }
+
+    //Calcula a distancia que cada carta vai entre uma e outra
     private Vector3 CalculateDistanceHandPosition(int indice, int limit)
     {
         
@@ -114,6 +133,7 @@ public class PlayerHandController : MonoBehaviour
 
     }
 
+    //Adiciona uma carta na mão
     public void AddCard(GameObject card)
     {
         if(cards.Count < maxCardOnHand)

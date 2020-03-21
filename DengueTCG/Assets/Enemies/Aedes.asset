@@ -14,11 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Aedes aegypti
   stats:
-    max_HP: 0
-    max_Shield: 0
-    max_cost: 0
+    max_HP: 20
+    max_Shield: 10
+    max_Cost: 0
   artwork: {fileID: 0}
+  tipo: 0
+  type: 
   enemyCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  prizeCards:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

@@ -5041,7 +5041,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 874901225}
+      - m_Target: {fileID: 911783637}
         m_MethodName: EncerrarTurno
         m_Mode: 1
         m_Arguments:
@@ -5369,7 +5369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 94.0636, y: 93.96423}
+  m_AnchoredPosition: {x: 94.06372, y: 93.96423}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &874901225
@@ -5386,13 +5386,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDeck: {fileID: 1675812471}
   myHand: {fileID: 697517266}
-  BotaoEncerraTurno: {fileID: 857669647}
   status:
     max_HP: 15
     max_Shield: 5
-    max_cost: 4
+    max_Cost: 4
   currentHp: 0
   currentShield: 0
+  currentMaxCost: 0
   currentCost: 0
   nameText: {fileID: 1759146092}
   hpText: {fileID: 1882331016}
@@ -5581,6 +5581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 911783636}
+  - component: {fileID: 911783637}
   m_Layer: 0
   m_Name: Battle System
   m_TagString: Untagged
@@ -5602,6 +5603,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &911783637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911783635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b9688d46b1369478506bff0ef80ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 874901225}
+  enemy: {fileID: 2094092264}
+  botaoEncerraTurno: {fileID: 857669647}
 --- !u!1 &960489498
 GameObject:
   m_ObjectHideFlags: 0
@@ -8389,8 +8405,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -124.999985, y: -18.000015}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -180, y: -17.99999}
+  m_SizeDelta: {x: 230, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1441988293
 MonoBehaviour:
@@ -9983,8 +9999,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 128, y: -18}
-  m_SizeDelta: {x: 160, y: 50}
+  m_AnchoredPosition: {x: 145, y: -19}
+  m_SizeDelta: {x: 160, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759146092
 MonoBehaviour:
@@ -11334,7 +11350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104e1ef4ac11c5b4d98b37d865afe0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  enemy: {fileID: 11400000, guid: f734f8fdac7bc9c42b8c2eef074a2d62, type: 2}
   currentHp: 0
   currentShield: 0
   nameText: {fileID: 1441988293}

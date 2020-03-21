@@ -10,6 +10,6 @@ public class Entidade
     [Tooltip("Escudo máximo da entidade ")]
     public int max_Shield;
     [Tooltip("Energias para cartas máximo")]
-    public int max_cost;
+    public int max_Cost;
 
 }

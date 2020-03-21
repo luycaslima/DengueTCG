@@ -1,20 +1,27 @@
 ﻿using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
+
+/// <summary>
+/// Classe que administra o baralho do jogo, armazena cada Card e cria uma instancia do cardDisplay com seu respectivo Card, mostra ao jogador e coloca na mão (PlayerHandController)
+/// 
+/// Autor: Lucas Lima da Silva Santos
+/// Data de Criação: 02/02/2020
+/// </summary>
+
 
 public class Deck : MonoBehaviour
 {
 
-    public float timeShowPlayer;
+    public float timeShowPlayer;         //tempo máximo que a carta fica no meio da tela
     private float currentTimeShow;
     bool moveToHand;
     bool chegou;
 
     [Tooltip("Base da Carta")]
-    public GameObject cardPrefab;   //Prefab do display da carta
+    public GameObject cardPrefab;        //Prefab do display da carta
     
     [Header("Posições da Carta")]
     public GameObject myHandsGrid;       //Posição da mão onde as Cartas ficam
@@ -25,20 +32,17 @@ public class Deck : MonoBehaviour
     public Text numberOfCardsText;
     private int numberOfCards = 0;
 
-    public List<Card> deck = new List<Card>();
+    public List<Card> deck = new List<Card>(); //Baralho de cartas
 
-    private PlayerController player;
+    private PlayerController player;    //Referencia ao player no jogo
 
-    private Vector3 targetPosition; //Armazena a posição que a carta vai no momento
-    private Vector3 handPosition;   //Posição que recebe a posição da mão que a carta vai fica
+    private Vector3 targetPosition;     //Armazena a posição que a carta vai no momento
+    private Vector3 handPosition;       //Posição que recebe a posição da mão que a carta vai fica
 
     [SerializeField]
     private GameObject cardInstanciacao; //Instancia da carta criada
 
    
-    
-    //Criar classe altera o tamanho das cartas da ui e deixa eu clicar em cada uma delas e executa a ação dela
-    //Essa mesma classe recebe o texto mostrando quanto de custo ainda possuo para usar as cartas e atualiza na tela
     public void PickUpCards(int pickedCards)
     {
         //Checa se o deck possui cards ainda

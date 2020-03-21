@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+
+/// <summary>
+/// Classe que administra,chama e esconde as telas de menu do jogo e a tela de batalha
+/// Possui funções para os botões de cada tela
+/// 
+/// Autor: Lucas Lima da Silva Santos
+/// Data de criação: 25/02/2020 
+/// </summary>
+
 public class UIManager : MonoBehaviour
 {
     public RectTransform PauseMenu, OptionMenu, MainMenu,BattleScene;

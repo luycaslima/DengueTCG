@@ -4,6 +4,13 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
+/// <summary>
+/// Classe que mostra os dados da instância da classe Card numa carta na tela
+/// recebe e mostra todas os atributos do Card, administra o movimento da carta na tela e chama as funções de descarte e carta escolhida do Player Hand Controller
+/// 
+/// Autor:Lucas Lima da Silva Santos
+/// Data de criação: 02/02/2020
+/// </summary>
 
 public class cardDisplay : MonoBehaviour
 {
