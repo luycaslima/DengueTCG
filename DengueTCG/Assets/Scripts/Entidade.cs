@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Define os pontos de vida, escudo e custo máximo que uma entidade pode possuir
+/// 
+/// Autor: Lucas Lima da Silva Santos
+/// Data de Criação: 02/02/2020
+/// </summary>
+
 [System.Serializable]
 public class Entidade
 {

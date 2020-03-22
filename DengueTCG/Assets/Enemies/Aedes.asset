@@ -22,9 +22,6 @@ MonoBehaviour:
   enemyCards:
   - {fileID: 11400000, guid: 6a2df7671a8c3164e82f3623cc6aa2b5, type: 2}
   - {fileID: 11400000, guid: ddf80b8d92583df48ad6a831663f90b4, type: 2}
-  - {fileID: 0}
   prizeCards:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ab0e687e13efe7f4c8161263d32aacd3, type: 2}
+  - {fileID: 11400000, guid: 2a11d0e0ee6d0314bbd8eb94ea9d3018, type: 2}

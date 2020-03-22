@@ -62,9 +62,7 @@ public class PlayerController : MonoBehaviour
         myHand.setPlayer(this); //Configurando que está mao é minha
     }
 
-    
-
-    //Da outra olhada nisso
+    //Usa a energia guardada para ativar uma carta
     public void useCost(int cost)
     {
         if(currentCost - cost >= 0)
@@ -78,7 +76,7 @@ public class PlayerController : MonoBehaviour
         actualCostText.text = currentCost.ToString();
     }
 
-    //Aumenta o Custo máximo temporariamente ao descartar carta
+    //Aumenta a energia máximo temporariamente ao descartar carta
     public void GrowCost(int value)
     {
         currentMaxCost = status.max_Cost + value;
@@ -86,51 +84,48 @@ public class PlayerController : MonoBehaviour
         UpdateCostText();
     }
 
+    //Reseta o valor da energia pro máximo normal ao fim do turno
     public void ResetCost()
     {
         currentMaxCost = status.max_Cost;
         currentCost = currentMaxCost;
         ResetCostText();
     }
+    //atualiza o texto na tela da energia do jogador
     public void UpdateCostText()
     {
         totalCostText.text = currentMaxCost.ToString();
         actualCostText.text = currentCost.ToString();
     }
 
+    //Reseta os valores da energia devolta ao normal
     public void ResetCostText()
     {
         totalCostText.text = currentMaxCost.ToString();
         actualCostText.text = currentMaxCost.ToString();
     }
 
+    //Atualiza os pontos de vida na tela do jogador
     public void UpdateHpText()
     {
         hpText.text = currentHp.ToString();
     }
 
+    //Atualiza o texto do escudo na tela do jogador
     public void UpdateShieldText()
     {
        shieldText.text = currentShield.ToString();
     }
 
  
-
+    //Pega todas as cartas da pilha de descarte e coloca no baralho de volta(deck)
     public void ResetDeck()
     {
         playerDeck.deck.AddRange(discardPile);
-        //playerDeck.deck = discardPile;
 
         discardPile.Clear();
         playerDeck.UpdateNumberOfCardsDeck();
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-    
-
-        
-    }
 }

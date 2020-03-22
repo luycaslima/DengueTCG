@@ -42,25 +42,22 @@ public class EnemyController : MonoBehaviour
         hpText.text = enemy.stats.max_HP.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //Escolhe uma carta dentre as cartas que possui
     public void ChooseCard()
     {
         int rndCardIndex = Random.Range(0, enemy.enemyCards.Count);
         Card pickedCard = enemy.enemyCards[rndCardIndex];
-        //Debug.Log(pickedCard.title);
+        
         battle.ApplyCardEffect(pickedCard);
     }
 
+    //Atualiza o texto na tela dos pontos de vida
     public void UpdateHpText()
     {
         hpText.text = currentHp.ToString();
     }
 
+    //Atualiza o texto na tela dos pontos de escudo
     public void UpdateShieldText()
     {
         shieldText.text = currentShield.ToString();

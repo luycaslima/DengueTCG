@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Classe que administra máquina de estados da batalha e define qual turno é de quem e quem ganhou e perdeu
+/// Também aplica os efeitos das cartas e chama a janela de fim de batalha
+/// 
+/// Autor: Lucas Lima da Silva Santos
+/// Data de criação: 12/03/2020
 /// 
 /// </summary>
 
@@ -19,6 +23,10 @@ public class BattleManager : MonoBehaviour
         Victory,
         Defeat
     }
+    [Header("Número de cartas Prêmio Limite:")]
+    [Range(1,4)]
+    public int prizeLimit; //ser baseado na metade das cartas disponíveis do inimigo derrotado
+
     [Header("Estado da Batalha:")]
     [SerializeField]
     private State state;
@@ -26,30 +34,34 @@ public class BattleManager : MonoBehaviour
     [Header("Referências dos Atores da Batalha:")]
     public PlayerController player;
     public EnemyController enemy;
+    public UIManager uIManager;
 
 
     [Header("Ref de Texto de Status")]
 
     public RectTransform playerStatus;
     public RectTransform enemyStatus;
-    public RectTransform battleStatus; //Mostrar o Se Ganhou ou perdeu Aqui (criar um menuzin mais elaborado pra isso
-
-
+    
     private RectTransform initialPlayerStatusPos;
     private RectTransform initialEnemyStatusPos;
 
     private Text playerStatusText;
     private Text enemyStatusText;
-    private Text battleStatsText; 
-
+    
     [Header("Cores do Status do texto:")]
     public List<Color> statusColors;
 
     [Header("Botão de Encerrar turno")]
     public RectTransform buttonEndTurn;
 
+    [Header("Referencia a display da carta:")]
+    public GameObject cardDisplay;
+    public GameObject showCardPos;
+
     private bool canEndTurn;
     private bool endGame = false;
+    private bool endScreenCalled = false;
+    private bool enemyHasChoosed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +72,6 @@ public class BattleManager : MonoBehaviour
 
         playerStatusText = playerStatus.GetComponent<Text>();
         enemyStatusText = enemyStatus.GetComponent<Text>();
-        battleStatsText = battleStatus.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -69,11 +80,11 @@ public class BattleManager : MonoBehaviour
         //Checa se o jogo acabou
         if (!endGame)
         {
-            if(player.currentHp == 0)
+            if(player.currentHp <= 0)
             {
                 state = State.Defeat;
                 endGame = true;
-            }else if(enemy.currentHp == 0)
+            }else if(enemy.currentHp <= 0)
             {
                 state = State.Victory;
                 endGame = true;
@@ -85,44 +96,51 @@ public class BattleManager : MonoBehaviour
         switch (state)
         {
             case State.PlayerTurn:
-
-                //Checar se é o turno do player, 
-                //se sim ve se o baralho ta vazio para pegar da pilha de descarte e por no deck de volta
-                //senão continua normalmente
                
+                // O jogador pode puxar até cinco cartas na sua rodada e descartar até uma 
+                //Tratar melhor essa configuração para quando ele n possuir mais cartas ou poder puxar para aparecer o botao de fim de turno
                 if (!canEndTurn)
                 {
-                    if (player.currentCost == 0 /*|| player.myHand.cards.Count == 0 Chechar se eu não puxei cartas antes pra n da positivo logo de primeira*/ )
+                    if (player.currentCost == 0  )/*|| player.myHand.cards.Count == 0 Chechar se eu não puxei cartas antes pra n da positivo logo de primeira*/ 
                     {
-
                         ShowTurnButton();
                         canEndTurn = true;
-
                     }
 
                 }
                 else
                 {
-                    if (player.currentCost != 0 /*|| myHand.cards.Count == 0 Chechar se eu não puxei cartas antes pra n da positivo logo de primeira*/ )
+                    if (player.currentCost != 0 /*|| myHand.cards.Count == 0 */)
                     {
-
                         HideTurnButton();
                         canEndTurn = false;
-
                     }
                 }
 
                 break;
             case State.EnemyTurn:
 
-                enemy.ChooseCard();
-                state = State.PlayerTurn;
+                if (!enemyHasChoosed)
+                {
+                    enemy.ChooseCard();
+                    enemyHasChoosed = true;
+                }
+                
+                //state = State.PlayerTurn;
                 break;
             case State.Defeat:
-                Defeat();
+                if (!endScreenCalled)
+                {
+                    uIManager.Defeat();
+                    endScreenCalled = true;
+                }
                 break;
             case State.Victory:
-                Victory();
+                if (!endScreenCalled)
+                {
+                    uIManager.Victory(enemy.enemy.prizeCards);
+                    endScreenCalled = true;
+                }
                 break;
         }
 
@@ -139,11 +157,39 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            //Mostra a carta ao player depois causa o efeito e passa o turno
-            CheckCardEffectEnemy(card);
+            
+            InstantiateEnemyCard(card);
         }
     }
 
+    //Mostra a carta ao player 
+    private void InstantiateEnemyCard(Card card)
+    {
+        GameObject cardInstance = Instantiate(cardDisplay,showCardPos.transform);
+        cardInstance.transform.localPosition = new Vector3(0f, 500f);
+       
+        cardInstance.GetComponent<cardDisplay>().card = card;
+        cardInstance.GetComponent<cardDisplay>().isAEnemyCard = true;
+
+
+        cardInstance.transform.localScale = Vector3.one * 1.2f;
+        cardInstance.transform.DOMove(Vector3.zero, .35f);
+
+        //Colocar também que se clicar em algum ponto da tela essa carta seja removida de uma vez ou não deixar so por timer
+        StartCoroutine(DestroyEnemyCard(cardInstance, card));
+    }
+
+    //Ao ser chamada, destroi a carta apresentada, aplica o efeito dela e passa o turno
+    private IEnumerator DestroyEnemyCard(GameObject cardDisplay, Card card)
+    {
+        yield return new WaitForSeconds(1.15f);
+            Destroy(cardDisplay);
+            CheckCardEffectEnemy(card);
+            state = State.PlayerTurn;
+            enemyHasChoosed = false;
+    }
+
+    //Checa o efeito da carta do player e aplica nele mesmo ou inimigo
     private void CheckCardEffectPlayer(Card card)
     {
         switch (card.type)
@@ -151,7 +197,7 @@ public class BattleManager : MonoBehaviour
             case Card.Types.Atack:
                 DamageEnemy(card.effect);
                 CallStatusText(enemyStatus, initialEnemyStatusPos, enemyStatusText, card.effect, "-", statusColors[0], initialEnemyStatusPos.position.x, 2, .30f);
-                //Chamar função da animacao aqui
+              
                 break;
             case Card.Types.RecoverHp:
                 RecoverHpPlayer(card.effect);
@@ -166,6 +212,8 @@ public class BattleManager : MonoBehaviour
                 break;
         }
     }
+
+    //Checa o efeito da carta do inimigo e aplica nele mesmo ou player
     private void CheckCardEffectEnemy(Card card)
     {
         switch (card.type)
@@ -175,7 +223,8 @@ public class BattleManager : MonoBehaviour
                 CallStatusText(playerStatus, initialPlayerStatusPos, playerStatusText, card.effect, "-", statusColors[0], initialPlayerStatusPos.position.x, 1, .30f);
                 break;
             case Card.Types.RecoverHp:
-
+                RecoverHpEnemy(card.effect);
+                CallStatusText(enemyStatus, initialEnemyStatusPos, enemyStatusText, card.effect, "+", statusColors[1], initialEnemyStatusPos.position.x, 2, .30f);
                 break;
             case Card.Types.ShieldUp:
                 ShieldUpEnemy(card.effect);
@@ -187,14 +236,13 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    //Mostra o efeito aplicado na tela sob uma entidade(dano, escudo, recuperar hp)
     private void CallStatusText(RectTransform Postext, RectTransform initialPos, Text text, int value, string signal, Color color, float x, float y, float time)
     {
         /*StopCoroutine(ResetCallStatusText(Postext, initialPos));
         Postext.DOKill();
-        Postext.position = initialPos.position;
+        
         */
-        Postext.DOKill();
-        Postext.DOMove(initialPos.position, time);
 
         Postext.gameObject.SetActive(true);
         text.color = color;
@@ -203,18 +251,17 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(ResetCallStatusText(Postext, initialPos));
     }
 
+    //Esconde o texto do efeito aplicado depois de meio segundo
     IEnumerator ResetCallStatusText(RectTransform Postext , RectTransform targetPos)
     {
-        //TODO O texto não está voltando para posição original
+        
         yield return new WaitForSeconds(.5f);
-
-        Postext.DOKill();
-        Postext.DOMove(targetPos.position, .35f);
-        //Postext.position = new Vector2(targetPos.position.x, targetPos.position.y);
+        Postext.localPosition = Vector3.zero;
        
         Postext.gameObject.SetActive(false);
     }
 
+    //Termina o turno do player
     public void EndTurn()
     {
         //Pode possuir uma chamada de uma função que anime as cartas indo a pilha de descarte aqui
@@ -231,18 +278,20 @@ public class BattleManager : MonoBehaviour
         state = State.EnemyTurn;
     }
 
+    //Esconde o butao de encerrar turno
     private void HideTurnButton()
     {
         buttonEndTurn.DOKill();
         buttonEndTurn.DOAnchorPos(new Vector2(300f, 0), 0.30f);
     }
 
+    //Mostra o botao de encerrar turno
     private void ShowTurnButton()
     {
         buttonEndTurn.DOAnchorPos(Vector2.zero, 0.30f);
     }
 
-
+    //Aumenta o escudo do jogador
     public void ShieldUpPlayer(int shieldValor)
     {
         if (shieldValor + player.currentShield < player.status.max_Shield)
@@ -257,6 +306,8 @@ public class BattleManager : MonoBehaviour
         player.UpdateShieldText();
     }
 
+    //Aumenta os pontos de vida do jogador
+
     public void RecoverHpPlayer(int hpValor)
     {
         if (hpValor + player.currentHp < player.status.max_HP)
@@ -270,6 +321,8 @@ public class BattleManager : MonoBehaviour
 
         player.UpdateHpText();
     }
+
+    //Causa dano ao inimigo
 
     private void DamageEnemy(int damage)
     {
@@ -297,6 +350,22 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    //Recupera os pontos de vida do inimigo
+    public void RecoverHpEnemy(int hpValor)
+    {
+        if (hpValor + enemy.currentHp < enemy.enemy.stats.max_HP)
+        {
+            enemy.currentHp = enemy.currentHp + hpValor;
+        }
+        else
+        {
+            enemy.currentShield = enemy.enemy.stats.max_Shield;
+        }
+
+        enemy.UpdateHpText();
+    }
+
+    //aumenta o escudo do inimigo
     public void ShieldUpEnemy(int shieldValor)
     {
         if (shieldValor + enemy.currentShield < enemy.enemy.stats.max_Shield)
@@ -311,6 +380,7 @@ public class BattleManager : MonoBehaviour
         enemy.UpdateShieldText();
     }
 
+    //causa dano no player
     private void DamagePlayer(int damage)
     {
         if (player.currentShield > 0)
@@ -332,17 +402,6 @@ public class BattleManager : MonoBehaviour
             player.currentHp = player.currentHp - damage;
         }
         player.UpdateHpText();
-
-    }
-
-
-    private void Victory()
-    {
-
-    }
-
-    private void Defeat()
-    {
 
     }
 

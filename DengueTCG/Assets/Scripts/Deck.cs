@@ -42,7 +42,7 @@ public class Deck : MonoBehaviour
     [SerializeField]
     private GameObject cardInstance; //Instancia da carta criada
 
-   
+    //Puxa um valor x de cartas
     public void PickUpCards(int pickedCards)
     {
         //Checa se o deck possui cards ainda
@@ -95,19 +95,20 @@ public class Deck : MonoBehaviour
         
     }
 
-    //ligando o player a esse deck
+    //Liga o deck ao player
     public void DeckSetup(PlayerController playerToSet)
     {
         player = playerToSet;
     }
 
+    //Atualiza o numero de cartas no texto da tela
     public void UpdateNumberOfCardsDeck()
     {
         numberOfCards = deck.Count;
         numberOfCardsText.text = numberOfCards.ToString();
     }
 
-
+    //Chamada uma vez ao iniciar no jogo
     private void Start()
     {
         numberOfCards = deck.Count;
@@ -117,7 +118,7 @@ public class Deck : MonoBehaviour
     private void Update()
     {
         
-
+        //Movimento da carta indo para o meio da tela e depois indo para mão ao puxar uma carta
         if (moveToHand && cardInstance != null)
         {
             currentTimeShow += Time.deltaTime;

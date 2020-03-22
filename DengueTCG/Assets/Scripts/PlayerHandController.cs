@@ -18,7 +18,8 @@ public class PlayerHandController : MonoBehaviour
     public int maxCardOnHand = 7;
 
     public int discardLimit = 1;
-    private int actualDiscard = 0;
+ 
+    public int actualDiscard = 0;
     private bool podeDescartar;
 
     public Vector3 rangedCardPosition; // Distancia entre as cartas
@@ -31,6 +32,8 @@ public class PlayerHandController : MonoBehaviour
 
     //Cartas na mão
     public List<GameObject> cards = new List<GameObject>();
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,7 +90,7 @@ public class PlayerHandController : MonoBehaviour
         }
     }
 
-    //descarta uma Carta da mão
+    //Descarta uma Carta da mão
     public void DiscardCard(GameObject choosedCard)
     {
         Card cardData = choosedCard.GetComponent<cardDisplay>().card;

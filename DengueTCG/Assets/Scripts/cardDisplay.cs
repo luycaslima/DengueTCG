@@ -36,7 +36,7 @@ public class cardDisplay : MonoBehaviour
     public bool showCard;
 
     private RectTransform enemyTarget; //Recebe a posição da imagem do inimigo
-    //private GameObject discardPile;
+    private GameObject discardPile;
     private RectTransform discardPilePos;
 
     [System.NonSerialized]
@@ -47,6 +47,8 @@ public class cardDisplay : MonoBehaviour
     public GameObject parent; //Referencia ao parente
     private PlayerHandController hand; //Referencia ao codigo da mão
     private int position = 0; //Posição que fica na fila objetos filhos
+    public bool isAEnemyCard = false;
+    public bool isPrizeCard = false;
 
     public void LoadCard(Card c)
     {
@@ -130,6 +132,16 @@ public class cardDisplay : MonoBehaviour
             sizeCard.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         }
     }
+
+    //Quando a carta for um premio e for escolhida, mandar um evento ao battle manager q foi essa a escolhida
+    public void onClick()
+    {
+        if (isPrizeCard)
+        {
+            Debug.Log("Escolhi essa carta");
+
+        }
+    }
     
     
     public void OnDrag()
@@ -189,10 +201,10 @@ public class cardDisplay : MonoBehaviour
         var enemy = GameObject.Find("Enemy Image");
         enemyTarget = enemy.GetComponent<RectTransform>();
 
-        //Inutilizado
-        /*discardPile = GameObject.Find("Discard Pile");
+       
+        discardPile = GameObject.Find("Discard Pile");
         discardPilePos = discardPile.GetComponent<RectTransform>();
-        */
+        
         originalPos = GetComponent<RectTransform>(); //Recebe a posição e tamanho inicial da carta
         LoadCard(card);
     }
@@ -200,7 +212,7 @@ public class cardDisplay : MonoBehaviour
     private void Update()
     {
         //Checa se recebeu o valor final da carta na mao para permitir aumentar a carta
-        if (!showCard)
+        if (!showCard && (!isAEnemyCard || !isPrizeCard))
         {
             if(transform.parent.name.Equals("Player Hand") && Vector3.Distance(transform.position, positionToGoBack) < 0.1f)
             {
