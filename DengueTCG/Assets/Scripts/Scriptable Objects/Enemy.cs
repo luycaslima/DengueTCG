@@ -17,17 +17,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemy")]
 public class Enemy : ScriptableObject
 {
-    private enum Tipo
+    public enum Tipo
     {
-        Voador,
-        Larva
+        None,
+        Fly,
+        Maggot
     }
     public string title;
     public Entidade stats;
     public Sprite artwork;
-    [SerializeField]
-    private Tipo tipo;
-    public string type;
+    public Tipo tipo;
+
     public List<Card> enemyCards = new List<Card>();
 
 

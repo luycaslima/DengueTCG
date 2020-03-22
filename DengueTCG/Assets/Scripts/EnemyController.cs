@@ -14,7 +14,11 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Inimigo:")]
     public Enemy enemy;
+
+    [Header("Referência a Batalha:")]
+    public BattleManager battle;
 
     [Header("Status Atual:")]
     public int currentHp;
@@ -23,11 +27,17 @@ public class EnemyController : MonoBehaviour
     [Header("Referência dos Textos:")]
     public Text nameText;
     public Text hpText;
+    public Text shieldText;
 
+    [Header("Prefab da Carta:")]
+    public GameObject cardDisplay;
 
     // Start is called before the first frame update
     void Start()
     {
+        currentHp = enemy.stats.max_HP;
+        currentShield = 0;
+
         nameText.text = enemy.title;
         hpText.text = enemy.stats.max_HP.ToString();
     }
@@ -37,4 +47,23 @@ public class EnemyController : MonoBehaviour
     {
         
     }
+
+    public void ChooseCard()
+    {
+        int rndCardIndex = Random.Range(0, enemy.enemyCards.Count);
+        Card pickedCard = enemy.enemyCards[rndCardIndex];
+        //Debug.Log(pickedCard.title);
+        battle.ApplyCardEffect(pickedCard);
+    }
+
+    public void UpdateHpText()
+    {
+        hpText.text = currentHp.ToString();
+    }
+
+    public void UpdateShieldText()
+    {
+        shieldText.text = currentShield.ToString();
+    }
+
 }

@@ -18,6 +18,9 @@ using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Referência a Batalha:")]
+    public BattleManager battle;
+
     [Header("Partes do Player:")]
     public Deck playerDeck;
     public PlayerHandController myHand;
@@ -30,19 +33,16 @@ public class PlayerController : MonoBehaviour
     public int currentShield;
     public int currentMaxCost;
     public int currentCost;
-    private bool podeEncerrarTurno;
 
     [Header("Referência dos Textos:")]
     public Text nameText;
     public Text hpText;
+    public Text shieldText;
     public Text totalCostText;
     public Text actualCostText;
 
     [Header("Discard Pile:")]
     public List<Card> discardPile = new List<Card>();
-
-
-    //Colocar o Inimigo aqui?
 
     // Start is called before the first frame update
     void Start()
@@ -62,31 +62,7 @@ public class PlayerController : MonoBehaviour
         myHand.setPlayer(this); //Configurando que está mao é minha
     }
 
-    public void Damage(int damage)
-    {
-        //Configurar se passar do escudo dar dano no player tbm
-        if(currentShield > 0)
-        {
-            currentShield = currentShield - damage;
-        }
-        else
-        {
-            currentHp = currentHp - damage;
-        }
-
-    }
-
-    public void ShieldUp(int shieldValor)
-    {
-        if(shieldValor  + currentShield < status.max_Shield)
-        {
-            currentShield = currentShield + shieldValor;
-        }
-        else
-        {
-            currentShield = status.max_Shield;
-        }
-    }
+    
 
     //Da outra olhada nisso
     public void useCost(int cost)
@@ -102,44 +78,53 @@ public class PlayerController : MonoBehaviour
         actualCostText.text = currentCost.ToString();
     }
 
-    public void RecoverCost(int cost)
-    {
-        if(currentCost + cost < status.max_Cost)
-        {
-            currentCost = currentCost + cost;
-        }
-        else
-        {
-            currentCost = status.max_Cost;
-        }
-    }
-
     //Aumenta o Custo máximo temporariamente ao descartar carta
     public void GrowCost(int value)
     {
         currentMaxCost = status.max_Cost + value;
         currentCost = currentCost + value;
-        UpdateText();
+        UpdateCostText();
     }
 
     public void ResetCost()
     {
         currentMaxCost = status.max_Cost;
         currentCost = currentMaxCost;
-        UpdateText();
+        ResetCostText();
+    }
+    public void UpdateCostText()
+    {
+        totalCostText.text = currentMaxCost.ToString();
+        actualCostText.text = currentCost.ToString();
     }
 
-    public void UpdateText()
+    public void ResetCostText()
     {
         totalCostText.text = currentMaxCost.ToString();
         actualCostText.text = currentMaxCost.ToString();
     }
 
-    //comandos lançados ao game system ou devolta usar o listener do bamghosts 
-    public void Dead()
+    public void UpdateHpText()
     {
-
+        hpText.text = currentHp.ToString();
     }
+
+    public void UpdateShieldText()
+    {
+       shieldText.text = currentShield.ToString();
+    }
+
+ 
+
+    public void ResetDeck()
+    {
+        playerDeck.deck.AddRange(discardPile);
+        //playerDeck.deck = discardPile;
+
+        discardPile.Clear();
+        playerDeck.UpdateNumberOfCardsDeck();
+    }
+
 
     // Update is called once per frame
     void Update()

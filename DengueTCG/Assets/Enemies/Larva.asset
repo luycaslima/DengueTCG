@@ -18,7 +18,6 @@ MonoBehaviour:
     max_Shield: 0
     max_Cost: 0
   artwork: {fileID: 0}
-  tipo: 1
-  type: 
+  tipo: 2
   enemyCards: []
   prizeCards: []

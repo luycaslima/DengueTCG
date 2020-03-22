@@ -74,6 +74,8 @@ public class PlayerHandController : MonoBehaviour
         //Ve se pode usar senao volta pro lugar
         if(player.currentCost - cardData.cost >= 0)
         {
+            player.battle.ApplyCardEffect(cardData); 
+
             cards.Remove(choosedCard);
             player.discardPile.Add(cardData);
             player.useCost(cardData.cost);
@@ -85,6 +87,7 @@ public class PlayerHandController : MonoBehaviour
         }
     }
 
+    //descarta uma Carta da mão
     public void DiscardCard(GameObject choosedCard)
     {
         Card cardData = choosedCard.GetComponent<cardDisplay>().card;
@@ -109,6 +112,7 @@ public class PlayerHandController : MonoBehaviour
         }
     }
 
+    //Descarta a mão inteira
     public void DiscardHand()
     {
         Card cardData;
@@ -153,7 +157,7 @@ public class PlayerHandController : MonoBehaviour
             if(actualDiscard == discardLimit)
             {
 
-                //ESCURECER A PILHA DE DESCARTE AQUI
+                //TODO ESCURECER A PILHA DE DESCARTE AQUI
                 podeDescartar = false;
             }
         }

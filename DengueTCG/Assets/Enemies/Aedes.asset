@@ -15,15 +15,13 @@ MonoBehaviour:
   title: Aedes aegypti
   stats:
     max_HP: 20
-    max_Shield: 10
+    max_Shield: 5
     max_Cost: 0
   artwork: {fileID: 0}
-  tipo: 0
-  type: 
+  tipo: 1
   enemyCards:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 6a2df7671a8c3164e82f3623cc6aa2b5, type: 2}
+  - {fileID: 11400000, guid: ddf80b8d92583df48ad6a831663f90b4, type: 2}
   - {fileID: 0}
   prizeCards:
   - {fileID: 0}

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// Classe que mostra os dados da instância da classe Card numa carta na tela
 /// recebe e mostra todas os atributos do Card, administra o movimento da carta na tela e chama as funções de descarte e carta escolhida do Player Hand Controller
 /// 
-/// Autor:Lucas Lima da Silva Santos
+/// Autor: Lucas Lima da Silva Santos
 /// Data de criação: 02/02/2020
 /// </summary>
 
@@ -28,15 +28,15 @@ public class cardDisplay : MonoBehaviour
 
 
     public Image artwork;
-    public Image background; //simbolo do efeito da carta
-
+    //public Image background; //simbolo do efeito da carta
+    public List<Image> backgroundEffect;
 
     public RectTransform sizeCard; //Pega transform a ser alterado da carta
     private RectTransform originalPos; //armazena o estado inicial do transform para retornar ao normal
     public bool showCard;
 
     private RectTransform enemyTarget; //Recebe a posição da imagem do inimigo
-    private GameObject discardPile;
+    //private GameObject discardPile;
     private RectTransform discardPilePos;
 
     [System.NonSerialized]
@@ -75,12 +75,20 @@ public class cardDisplay : MonoBehaviour
         switch (c.type)
         {
             //Se o tipo da carta for especial, desativa o valor de efeitos
-            case 2:
-                background.gameObject.SetActive(false);
+            case Card.Types.Especial:
+                effects.gameObject.SetActive(false);
                 break;
-            default:
+            case Card.Types.Atack:
+                backgroundEffect[0].gameObject.SetActive(true);
                 effects.text = c.effect.ToString();
-                //Seta o background pra defesa e ataque
+                break;
+            case Card.Types.ShieldUp:
+                backgroundEffect[1].gameObject.SetActive(true);
+                effects.text = c.effect.ToString();
+                break;
+            case Card.Types.RecoverHp:
+                backgroundEffect[2].gameObject.SetActive(true);
+                effects.text = c.effect.ToString();
                 break;
         } 
     
@@ -182,10 +190,9 @@ public class cardDisplay : MonoBehaviour
         enemyTarget = enemy.GetComponent<RectTransform>();
 
         //Inutilizado
-        discardPile = GameObject.Find("Discard Pile");
+        /*discardPile = GameObject.Find("Discard Pile");
         discardPilePos = discardPile.GetComponent<RectTransform>();
-        //
-
+        */
         originalPos = GetComponent<RectTransform>(); //Recebe a posição e tamanho inicial da carta
         LoadCard(card);
     }

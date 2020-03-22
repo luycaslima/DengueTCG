@@ -34,13 +34,13 @@ public class Deck : MonoBehaviour
 
     public List<Card> deck = new List<Card>(); //Baralho de cartas
 
-    private PlayerController player;    //Referencia ao player no jogo
+    private PlayerController player;    
 
     private Vector3 targetPosition;     //Armazena a posição que a carta vai no momento
     private Vector3 handPosition;       //Posição que recebe a posição da mão que a carta vai fica
 
     [SerializeField]
-    private GameObject cardInstanciacao; //Instancia da carta criada
+    private GameObject cardInstance; //Instancia da carta criada
 
    
     public void PickUpCards(int pickedCards)
@@ -51,10 +51,10 @@ public class Deck : MonoBehaviour
             
             chegou = false;
             //Se a ultima carta n foi chamada como parente ainda , é chamada aqui
-            if (cardInstanciacao != null)
+            if (cardInstance != null)
             {
-                cardInstanciacao.GetComponent<cardDisplay>().parent = myHandsGrid;
-                cardInstanciacao.transform.SetParent(myHandsGrid.transform);
+                cardInstance.GetComponent<cardDisplay>().parent = myHandsGrid;
+                cardInstance.transform.SetParent(myHandsGrid.transform);
             }
             
             //Pega uma carta
@@ -71,18 +71,18 @@ public class Deck : MonoBehaviour
                 cardInstanciado.transform.SetParent(myHandsGrid.transform);
                 */
                 
-                cardInstanciacao = Instantiate(cardPrefab, initialDeckPos);
-                cardInstanciacao.transform.localPosition = Vector3.zero;
+                cardInstance = Instantiate(cardPrefab, initialDeckPos);
+                cardInstance.transform.localPosition = Vector3.zero;
 
-                cardInstanciacao.GetComponent<cardDisplay>().card = pickedCard;
-                cardInstanciacao.GetComponent<cardDisplay>().showCard = false; //Permite passar o mouse sob a carta
+                cardInstance.GetComponent<cardDisplay>().card = pickedCard;
+                cardInstance.GetComponent<cardDisplay>().showCard = false; //Permite passar o mouse sob a carta
 
                 moveToHand = true;
                 
                 targetPosition = showCardPos.transform.position; //vai pra posição de show
                 currentTimeShow = 0;
 
-                player.myHand.AddCard(cardInstanciacao);
+                player.myHand.AddCard(cardInstance);
 
                 
             }
@@ -99,10 +99,15 @@ public class Deck : MonoBehaviour
     public void DeckSetup(PlayerController playerToSet)
     {
         player = playerToSet;
-    } 
+    }
+
+    public void UpdateNumberOfCardsDeck()
+    {
+        numberOfCards = deck.Count;
+        numberOfCardsText.text = numberOfCards.ToString();
+    }
 
 
-    
     private void Start()
     {
         numberOfCards = deck.Count;
@@ -113,7 +118,7 @@ public class Deck : MonoBehaviour
     {
         
 
-        if (moveToHand && cardInstanciacao != null)
+        if (moveToHand && cardInstance != null)
         {
             currentTimeShow += Time.deltaTime;
             if(currentTimeShow >= timeShowPlayer)
@@ -122,26 +127,26 @@ public class Deck : MonoBehaviour
                 targetPosition = handPosition;
                 
                 //Otimizar essas calls , podem ser custosas no futuro
-                cardInstanciacao.transform.SetParent(myHandsGrid.transform); //Ao terminar a animaçao , seta como parente
-                cardInstanciacao.GetComponent<cardDisplay>().parent = myHandsGrid;
-                cardInstanciacao.GetComponent<cardDisplay>().positionToGoBack = handPosition; //Da a posição atual pra carta ficar
+                cardInstance.transform.SetParent(myHandsGrid.transform); //Ao terminar a animaçao , seta como parente
+                cardInstance.GetComponent<cardDisplay>().parent = myHandsGrid;
+                cardInstance.GetComponent<cardDisplay>().positionToGoBack = handPosition; //Da a posição atual pra carta ficar
             }
 
 
             if (targetPosition == showCardPos.position )
             {
-                   cardInstanciacao.transform.position = Vector3.Lerp(cardInstanciacao.transform.position, targetPosition, 10 * Time.deltaTime);
+                   cardInstance.transform.position = Vector3.Lerp(cardInstance.transform.position, targetPosition, 10 * Time.deltaTime);
 
             }
             else if (targetPosition == handPosition )
             {
-                if(Vector3.Distance(cardInstanciacao.transform.position, targetPosition) > 0.1 && !chegou)
+                if(Vector3.Distance(cardInstance.transform.position, targetPosition) > 0.1 && !chegou)
                 {
-                    cardInstanciacao.transform.position = Vector3.Lerp(cardInstanciacao.transform.position, targetPosition, 10 * Time.deltaTime);
+                    cardInstance.transform.position = Vector3.Lerp(cardInstance.transform.position, targetPosition, 10 * Time.deltaTime);
                 }
                 else
                 {
-                    cardInstanciacao = null;
+                    cardInstance = null;
                     chegou = true;
                 }
 

@@ -19,5 +19,5 @@ MonoBehaviour:
     tamb\xE9m ajuda.\""
   flavorText: 
   type: 0
-  backgroundEffect: {fileID: 0}
-  effect: 5
+  target: 1
+  effect: 3
