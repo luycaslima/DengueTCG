@@ -18,7 +18,7 @@ public class Deck : MonoBehaviour
     public float timeShowPlayer;         //tempo máximo que a carta fica no meio da tela
     private float currentTimeShow;
     bool moveToHand;
-    bool chegou;
+    bool arrived;
 
     [Tooltip("Base da Carta")]
     public GameObject cardPrefab;        //Prefab do display da carta
@@ -49,7 +49,7 @@ public class Deck : MonoBehaviour
         if (deck.Any()) {
 
             
-            chegou = false;
+            arrived = false;
             //Se a ultima carta n foi chamada como parente ainda , é chamada aqui
             if (cardInstance != null)
             {
@@ -141,14 +141,14 @@ public class Deck : MonoBehaviour
             }
             else if (targetPosition == handPosition )
             {
-                if(Vector3.Distance(cardInstance.transform.position, targetPosition) > 0.1 && !chegou)
+                if(Vector3.Distance(cardInstance.transform.position, targetPosition) > 0.1 && !arrived)
                 {
                     cardInstance.transform.position = Vector3.Lerp(cardInstance.transform.position, targetPosition, 10 * Time.deltaTime);
                 }
                 else
                 {
                     cardInstance = null;
-                    chegou = true;
+                    arrived = true;
                 }
 
             }

@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public PlayerHandController myHand;
 
     [Header("Status do Player:")]
-    public Entidade status;
+    public Entity status;
 
     [Header("Status Atual:")]
     public int currentHp;

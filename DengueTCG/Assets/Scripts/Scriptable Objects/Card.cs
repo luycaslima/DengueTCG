@@ -43,7 +43,7 @@ public class Card : ScriptableObject {
     public string flavorText;
     public Types type;
 
-    public Enemy.Tipo target;
+    public Enemy.Type target;
     public EspecialEffect especialEffect;
 
     public int effect;

@@ -15,8 +15,6 @@ ScriptsOnlyBuild:
     - DG.Tweening.Core.DOTweenSettings
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
-    - UnityEditor.Tilemaps.GridPaletteBrushes
-    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.Rider.Editor.dll:
@@ -191,7 +189,7 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
-      Hash: 46ef4dd3526eb9af7ec61ea36be0eaf4
+      Hash: f2dc3345fcafee87adc97177158458b4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -329,7 +327,7 @@ ScriptsOnlyBuild:
     className: RectMask2D
   - hash:
       serializedVersion: 2
-      Hash: 66bdfd4c6495b04895928c8d3a8f095e
+      Hash: 25d0b34c845c0f5a714943b313b5c882
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemy
@@ -732,4 +730,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: C:/Users/lucas/Desktop/testeTCG.apk
+  playerPath: C:/Users/lucas/Desktop/DengueTCG_0.1.apk
