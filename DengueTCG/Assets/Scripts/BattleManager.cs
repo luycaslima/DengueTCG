@@ -13,7 +13,6 @@ using UnityEngine.UI;
 /// 
 /// </summary>
 
-
 public class BattleManager : MonoBehaviour
 {
     private enum State
